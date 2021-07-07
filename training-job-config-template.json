@@ -1,0 +1,32 @@
+{
+    "TrainingJobName": "my-first-training-job",
+    "AlgorithmSpecification": {
+        "TrainingImage": "<your-training-image-name>",
+        "TrainingInputMode": "File"
+    },
+    "RoleArn": "<your-role-arn>",
+    "InputDataConfig": [
+        {
+            "ChannelName": "flowers",
+            "DataSource": {
+                "S3DataSource": {
+                    "S3DataType": "S3Prefix",
+                    "S3Uri": "s3://<your-data-s3-bucket>/flowers",
+                    "S3DataDistributionType": "FullyReplicated",
+                }
+            },
+            "ContentType": "image/jpg"
+        }
+    ],
+    "OutputDataConfig": {
+        "S3OutputPath": "s3://<your-output-s3-bucket>"
+    },
+    "ResourceConfig": {
+        "InstanceType": "ml.g4dn.xlarge",
+        "InstanceCount": 1,
+        "VolumeSizeInGB": 75,
+     },
+    "StoppingCondition": {
+        "MaxRuntimeInSeconds": 86400
+    }
+}
