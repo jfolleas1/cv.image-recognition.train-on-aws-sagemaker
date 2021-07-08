@@ -1,0 +1,8 @@
+training-job-config.json
+.DS_Store
+.env/
+*/__pycache__/*
+archive.zip
+flowers/
+model.h5
+model.tar.gz

@@ -62,40 +62,10 @@ def build_data_pipelines():
 
   return train_generator, val_generator, eval_generator
 
-
-def train():
-
-  # image_gen = ImageDataGenerator(
-  #   rescale=1./255,
-  #   validation_split=0.2
-  # )
-
-  # train_data_gen = image_gen.flow_from_directory(
-  #   batch_size=BATCH_SIZE,
-  #   directory=os.path.join(DATA_DIR, "training"),
-  #   subset="training",
-  #   shuffle=True,
-  #   target_size=IMG_SIZE,
-  #   class_mode='sparse'
-  # )
-
-  # test_data_gen = image_gen.flow_from_directory(
-  #   batch_size=BATCH_SIZE,
-  #   directory=os.path.join(DATA_DIR, "training"),
-  #   subset="validation",
-  #   target_size=IMG_SIZE,
-  #   class_mode='sparse'
-  # )
-
-  train_generator, val_generator, eval_generator = build_data_pipelines()
-
-  classes_dict = train_data_gen.class_indices
-
-  print("classes_dict : \n ", classes_dict)
-
-
+def build_model(output_layer_dim):
   model = tf.keras.models.Sequential([
-      tf.keras.layers.Conv2D(32, (3,3), activation='relu', input_shape=(*IMG_SIZE, 3)),
+      tf.keras.layers.Conv2D(32, (3,3), activation='relu',
+       input_shape=(*INPUT_IMG_SIZE, 3)),
       tf.keras.layers.MaxPooling2D(2, 2),
       tf.keras.layers.Conv2D(64, (3,3), activation='relu'),
       tf.keras.layers.MaxPooling2D(2,2),
@@ -106,14 +76,29 @@ def train():
       tf.keras.layers.Dropout(0.5),
       tf.keras.layers.Flatten(),
       tf.keras.layers.Dense(512, activation='relu'),
-      tf.keras.layers.Dense(len(classes_dict), activation='softmax')
+      tf.keras.layers.Dense(output_layer_dim, activation='softmax')
   ])
 
   model.compile(
     optimizer=tf.keras.optimizers.Adam(lr=1e-4),
-    loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+    loss=tf.keras.losses.CategoricalCrossentropy(),
     metrics=["accuracy"]
   )
+
+  return model
+
+
+def train():
+
+
+  train_generator, val_generator, eval_generator = build_data_pipelines()
+
+  classes_dict = train_generator.class_indices
+
+  print("classes_dict : \n ", classes_dict)
+
+  model = build_model(output_layer_dim=len(classes_dict))
+  
  
   print(f" $ ls {DATA_DIR} : ")
   print(os.listdir(DATA_DIR))
@@ -121,8 +106,8 @@ def train():
   print(os.listdir(os.path.join(DATA_DIR, "training")))
 
 
-  model.fit(train_data_gen, epochs=2, steps_per_epoch=20)
-  test_loss, test_accuracy = model.evaluate(test_data_gen, steps=100)
+  model.fit(train_generator, epochs=2, steps_per_epoch=20)
+  test_loss, test_accuracy = model.evaluate(eval_generator, steps=100)
   print(f"Test accuracy: {test_accuracy}")
 
   model.save(OUTPUT_DIR + "model.h5")
