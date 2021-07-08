@@ -13,7 +13,8 @@
 
 # For more information on creating a Dockerfile
 # https://docs.docker.com/compose/gettingstarted/#step-2-create-a-dockerfile
-FROM tensorflow/tensorflow:2.2.0rc2-gpu-py3-jupyter
+# FROM tensorflow/tensorflow:2.2.0rc2-gpu-py3-jupyter
+FROM tensorflow/tensorflow:2.6.0rc0-gpu-jupyter
 
 # RUN apt-get update && apt-get install -y --no-install-recommends nginx curl
 
