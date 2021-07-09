@@ -57,6 +57,6 @@ aws sagemaker create-training-job --cli-input-json file://training-job-config.js
 
 
 TODO:
-
+Check with jordan if the created buckets and ECR are well protected
 Add gradient decay
 add restart from checkpoint

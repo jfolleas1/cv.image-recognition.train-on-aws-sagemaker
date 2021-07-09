@@ -4,6 +4,15 @@ from tensorflow.keras.applications import InceptionV3
 # Application configs
 
 DATA_NAME = "flowers"
+PROJECT_NAME = "jac.test-sagemaker"
+PROJECT_REGION = "eu-west-1"
+ALGORITHM_NAME = "sagemaker-tf-flower-example"
+
+# Local data config
+
+DATA_LOCAL_DIR = "./flowers"
+PERCENTAGE_VAL = 0.1
+PERCENTAGE_EVAL = 0.1
 
 # Model config
 
@@ -11,12 +20,6 @@ MODEL_BASE = InceptionV3
 MODEL_WEIGHTS = "imagenet"
 HEAD_DIMENSION_DROPOUTS = [(512, 0.5)]
 MODEL_LEARNING_RATE = 1e-5
-
-# Local data config
-
-DATA_LOCAL_DIR = './flowers'
-PERCENTAGE_VAL = 0.1
-PERCENTAGE_EVAL = 0.1
 
 # Training cofigs
 
@@ -43,7 +46,7 @@ CHECKPOINT_MODE = 'max'
 CHECKPOINT_SAVE_BEST_ONLY = True 
 CHECKPOINT_SAVE_FREQ = 'epoch'
 
-# fit
+## fit
 STEP_PER_EPOCH = 20 # default: 'auto'
 VALIDATION_STEPS = 20 # default: 'auto'
 EVALUATION_STEPS = 20 # default: 'auto'
@@ -52,7 +55,6 @@ NB_EPOCHS = 2
 # Others
 
 # Random seed set up to make repordiusable trainings
-
 RANDOM_SEED = 42
 
 
