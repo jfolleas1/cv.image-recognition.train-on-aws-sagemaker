@@ -54,3 +54,9 @@ aws ecr create-repository --repository-name ${algorithm_name}
 docker tag ${algorithm_name} ${fullname}
 docker push ${fullname}
 aws sagemaker create-training-job --cli-input-json file://training-job-config.json
+
+
+TODO:
+
+Add gradient decay
+add restart from checkpoint
