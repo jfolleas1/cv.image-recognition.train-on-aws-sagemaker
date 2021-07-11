@@ -1,11 +1,12 @@
+
+import os
 import glob
 import shutil
-import os
-import random
-from PIL import Image
+
 import numpy as np
 
-from container.modeling.config import DATA_LOCAL_DIR, PERCENTAGE_VAL, PERCENTAGE_EVAL
+from container.modeling.config import DATA_LOCAL_DIR, PERCENTAGE_VAL,\
+    PERCENTAGE_EVAL, RANDOM_SEED
 
 
 def split_data_into_class_folders():
@@ -26,6 +27,8 @@ def split_data_into_class_folders():
             val_lim = train_lim + int(nb_images * PERCENTAGE_VAL)
 
             print(train_lim, val_lim, nb_images)
+
+            np.random.shuffle(imgs_paths)
 
             for path in imgs_paths[:train_lim]:
                 basename = os.path.basename(path)
@@ -48,14 +51,11 @@ def split_data_into_class_folders():
                     os.makedirs(path_to_save)
                 shutil.copy(path, os.path.join(path_to_save, basename))
 
-
-
-
-
 if __name__ == '__main__':
 
     split_data_switch = True
 
+    np.random.seed(RANDOM_SEED)
 
     if split_data_switch :
         split_data_into_class_folders()
