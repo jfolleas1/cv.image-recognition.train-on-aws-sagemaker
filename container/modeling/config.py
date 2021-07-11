@@ -56,5 +56,7 @@ NB_EPOCHS = 2
 
 # Random seed set up to make repordiusable trainings
 RANDOM_SEED = 42
+# Instance on which the training is runing
+INSTANCE_TYPE = "ml.g4dn.xlarge"
 
 
