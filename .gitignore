@@ -1,6 +1,7 @@
 ## Project specific gitignore
 
 training-job-config.json
+s3-policy.json
 .DS_Store
 .env/
 */__pycache__/*

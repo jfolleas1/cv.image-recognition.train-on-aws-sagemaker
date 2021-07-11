@@ -5,6 +5,16 @@ from datetime import datetime
 
 import container.modeling.config as cfg
 
+def build_s3_policy_from_template():
+    # Build the s3 policy file from the template
+    with open('s3-policy-template.json', 'r') as f:
+        s3_policy = f.read()
+    project_name = cfg.PROJECT_NAME
+    s3_policy = s3_policy.replace("[project_name]", project_name)
+    # Save the built traing job config json file
+    with open("s3-policy.json", "w") as f:
+        f.write(s3_policy)
+
 def init_s3_buckets():
     os.system(f"aws s3 mb s3://{cfg.PROJECT_NAME}.data")
     os.system(f"aws s3 mb s3://{cfg.PROJECT_NAME}.output")
@@ -13,6 +23,7 @@ def init_s3_buckets():
         "--assume-role-policy-document file://./role-policy.json")
     os.system(f"aws iam attach-role-policy --role-name SagemakerRole " +\
         "--policy-arn arn:aws:iam::aws:policy/AmazonSageMakerFullAccess")
+    build_s3_policy_from_template()
     os.system(f"aws iam put-role-policy --role-name SagemakerRole " +\
         "--policy-document file://./s3-policy.json --policy-name s3-policy")
 
@@ -67,40 +78,9 @@ def launch_training():
     algorithm_name = cfg.ALGORITHM_NAME
     project_name = cfg.PROJECT_NAME
     instance_type = cfg.INSTANCE_TYPE
-    training_job_config = """{
-    "TrainingJobName": "training-job-test-flowers-[curr_datetime]",
-    "AlgorithmSpecification": {
-        "TrainingImage": "[account].dkr.ecr.[region].amazonaws.com/[algorithm_name]",
-        "TrainingInputMode": "File",
-        "EnableSageMakerMetricsTimeSeries": true
-    },
-    "RoleArn": "arn:aws:iam::[account]:role/SagemakerRole",
-    "InputDataConfig": [
-        {
-            "ChannelName": "flowers",
-            "DataSource": {
-                "S3DataSource": {
-                    "S3DataType": "S3Prefix",
-                    "S3Uri": "s3://[project_name].data/flowers",
-                    "S3DataDistributionType": "FullyReplicated"
-                }
-            },
-            "ContentType": "image/jpg"
-        }
-    ],
-    "OutputDataConfig": {
-        "S3OutputPath": "s3://[project_name].output"
-    },
-    "ResourceConfig": {
-        "InstanceType": "[instance_type]",
-        "InstanceCount": 1,
-        "VolumeSizeInGB": 75
-     },
-    "StoppingCondition": {
-        "MaxRuntimeInSeconds": 86400
-    }
-}
-"""
+    with open('training-job-config-template.json', 'r') as f:
+        training_job_config = f.read()
+
     training_job_config = training_job_config.replace("[curr_datetime]",\
                                                       curr_datetime)
     training_job_config = training_job_config.replace("[region]",\

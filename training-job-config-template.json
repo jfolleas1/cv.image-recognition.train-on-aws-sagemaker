@@ -1,30 +1,31 @@
 {
-    "TrainingJobName": "my-first-training-job",
+    "TrainingJobName": "training-job-test-flowers-[curr_datetime]",
     "AlgorithmSpecification": {
-        "TrainingImage": "<your-training-image-name>",
-        "TrainingInputMode": "File"
+        "TrainingImage": "[account].dkr.ecr.[region].amazonaws.com/[algorithm_name]",
+        "TrainingInputMode": "File",
+        "EnableSageMakerMetricsTimeSeries": true
     },
-    "RoleArn": "<your-role-arn>",
+    "RoleArn": "arn:aws:iam::[account]:role/SagemakerRole",
     "InputDataConfig": [
         {
             "ChannelName": "flowers",
             "DataSource": {
                 "S3DataSource": {
                     "S3DataType": "S3Prefix",
-                    "S3Uri": "s3://<your-data-s3-bucket>/flowers",
-                    "S3DataDistributionType": "FullyReplicated",
+                    "S3Uri": "s3://[project_name].data/flowers",
+                    "S3DataDistributionType": "FullyReplicated"
                 }
             },
             "ContentType": "image/jpg"
         }
     ],
     "OutputDataConfig": {
-        "S3OutputPath": "s3://<your-output-s3-bucket>"
+        "S3OutputPath": "s3://[project_name].output"
     },
     "ResourceConfig": {
-        "InstanceType": "ml.g4dn.xlarge",
+        "InstanceType": "[instance_type]",
         "InstanceCount": 1,
-        "VolumeSizeInGB": 75,
+        "VolumeSizeInGB": 75
      },
     "StoppingCondition": {
         "MaxRuntimeInSeconds": 86400
