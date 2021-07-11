@@ -26,13 +26,15 @@ def build_data_pipelines():
   val_data_path = os.path.join(DATA_DIR, 'validation')
   eval_data_path = os.path.join(DATA_DIR, 'evaluation')
 
+  classes = sorted(os.listdir(train_data_path))
+
   train_augmentor = ImageDataGenerator(
     rescale = cfg.PIXEL_RESCALE,
     rotation_range=cfg.TRAINING_ROTATION_RANGE,
     zoom_range=cfg.TRAINING_ZOOM_RANGE,
     width_shift_range=cfg.TRAINING_WIDTH_SHIFT_RANGE,
     height_shift_range=cfg.TRAINING_HEIGTH_SHIFT_RANGE,
-    shear_rang=cfg.TRAINING_SHEAR_RANGE,
+    shear_range=cfg.TRAINING_SHEAR_RANGE,
     horizontal_flip=cfg.TRAINING_HORIZONTAL_FLIP,
     fill_mode="nearest"
   )
@@ -47,6 +49,7 @@ def build_data_pipelines():
 
   train_generator = train_augmentor.flow_from_directory(
     train_data_path,
+    classes=classes,
     class_mode="categorical",
     target_size=cfg.INPUT_IMG_SIZE,
     color_mode="rgb",
@@ -56,6 +59,7 @@ def build_data_pipelines():
 
   val_generator = val_augmentor.flow_from_directory(
     val_data_path,
+    classes=classes,
     class_mode="categorical",
     target_size=cfg.INPUT_IMG_SIZE,
     color_mode="rgb",
@@ -65,6 +69,7 @@ def build_data_pipelines():
 
   eval_generator = eval_augmentor.flow_from_directory(
     eval_data_path,
+    classes=classes,
     class_mode="categorical",
     target_size=cfg.INPUT_IMG_SIZE,
     color_mode="rgb",
@@ -109,7 +114,7 @@ def build_callbacks():
                                  patience=cfg.EARLY_STOPPING_PATIENCE)
 
   ckpt_saver = ModelCheckpoint(
-      os.path.join(cfg.OUTPUT_DIR, "checkpoints"),
+      os.path.join(OUTPUT_DIR, "checkpoints"),
       monitor=cfg.CHECKPOINT_MONITOR,
       mode=cfg.CHECKPOINT_MODE,
       save_best_only=cfg.CHECKPOINT_SAVE_BEST_ONLY,
@@ -142,14 +147,14 @@ def train():
   )
 
   print('ls output dir : ')
-  print(os.listdir(cfg.OUTPUT_DIR))
+  print(os.listdir(OUTPUT_DIR))
   print('ls output/checkpoints dir : ')
-  print(os.listdir(os.path.join(cfg.OUTPUT_DIR, 'checkpoints')))
+  print(os.listdir(os.path.join(OUTPUT_DIR, 'checkpoints')))
 
   # Load best model
   with warnings.catch_warnings():
     warnings.simplefilter("ignore")
-    model.load_weights(os.path.join(cfg.OUTPUT_DIR, 'checkpoints'))
+    model.load_weights(os.path.join(OUTPUT_DIR, 'checkpoints'))
   
   print("[INFO] Evaluation phase...")
 
@@ -172,13 +177,15 @@ def train():
 
   # Save the best model and it's results
 
-  model.save(os.path.join(cfg.OUTPUT_DIR, "model.h5"))
-  pickle.dump(my_classification_report, open(os.path.join(cfg.OUTPUT_DIR,
+  model.save(os.path.join(OUTPUT_DIR, "model.h5"))
+  pickle.dump(my_classification_report, open(os.path.join(OUTPUT_DIR,
       "classification_report.pkl"), "wb" ))
-  pickle.dump(my_confusion_matrix, open(os.path.join(cfg.OUTPUT_DIR,
+  pickle.dump(my_confusion_matrix, open(os.path.join(OUTPUT_DIR,
       "confusion_matrix.pkl"), "wb" ))
+  pickle.dump(classes_dict, open(os.path.join(OUTPUT_DIR,
+      "classes_dict.pkl"), "wb" ))
 
 if __name__=="__main__":
-  tf.random.set_seed(RANDOM_SEED)
+  tf.random.set_seed(cfg.RANDOM_SEED)
 
   train()
