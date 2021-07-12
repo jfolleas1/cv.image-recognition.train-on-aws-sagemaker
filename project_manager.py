@@ -6,6 +6,9 @@ from datetime import datetime
 import container.modeling.config as cfg
 
 def build_s3_policy_from_template():
+    """
+    Build the AWS S3 policy based on the json file s3-policy-template.json
+    """
     # Build the s3 policy file from the template
     with open('s3-policy-template.json', 'r') as f:
         s3_policy = f.read()
@@ -16,6 +19,9 @@ def build_s3_policy_from_template():
         f.write(s3_policy)
 
 def init_s3_buckets():
+    """
+    Create the necessary AWS S3 bucket and the policies with it.
+    """
     os.system(f"aws s3 mb s3://{cfg.PROJECT_NAME}.data")
     os.system(f"aws s3 mb s3://{cfg.PROJECT_NAME}.output")
     os.system(f"aws s3 sync {cfg.DATA_LOCAL_DIR} s3://{cfg.PROJECT_NAME}.data")
@@ -28,6 +34,9 @@ def init_s3_buckets():
         "--policy-document file://./s3-policy.json --policy-name s3-policy")
 
 def get_aws_account():
+    """
+    Get the AWS account ot use for the training deployement
+    """
     stream = os.popen('aws sts get-caller-identity --query Account --output text')
     account = stream.read()[:-1]
     if account is None:
@@ -37,6 +46,9 @@ def get_aws_account():
     return account
 
 def get_aws_region():
+    """
+    Get the AWS region ot use for the training deployement
+    """
     # stream = os.popen('aws configure get region')
     # region = stream.read()[:-1]
     # if region is None:
@@ -47,6 +59,9 @@ def get_aws_region():
     return region
 
 def get_fullname():
+    """
+    Get the full name of the docker images to use on AWS ECR.
+    """
     account = get_aws_account()
     region = get_aws_region()
     algorithm_name=cfg.ALGORITHM_NAME
@@ -54,6 +69,9 @@ def get_fullname():
     return fullname
 
 def build_and_push_docker_image():
+    """
+    Build and push the docker image which will be used for the training job.
+    """
     # login on docker with AWS credentials
     account = get_aws_account()
     region = get_aws_region()
@@ -71,6 +89,9 @@ def build_and_push_docker_image():
     os.system(f"docker push {fullname}")
 
 def launch_training():
+    """
+    Launch the training job.
+    """
     # Build the config file for the training job
     curr_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     region = get_aws_region()

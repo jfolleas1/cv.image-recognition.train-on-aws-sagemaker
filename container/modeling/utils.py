@@ -2,18 +2,42 @@ import os
 import config as cfg
 
 def get_number_of_imgs_inside_folder(directory):
+    """
+    Count the number of images in the indicated folder.
 
+    Params:
+        - directory (str): The path to the directory of which we want to count
+            the number of pictures within it.
+
+    Returns:
+        - totalcount (int): The number of picutres within the directory.
+    """
     totalcount = 0
-
-    for root, dirnames, filenames in os.walk(directory):
+    # Loop over the filenames in the directory
+    for _, _, filenames in os.walk(directory):
         for filename in filenames:
+            # Only conside the files with an image extention
             _, ext = os.path.splitext(filename)
             if ext in [".png", ".jpg", ".jpeg"]:
                 totalcount = totalcount + 1
-
     return totalcount
 
 def get_nb_step(data_dir, data_type):
+    """
+    Compute the number of step per epoch or per validaiton/evaluation phase 
+    base on the total number of images availables in each dataset if not 
+    indicated in the configuration. If indicated in the configuration, use the 
+    indicated number.
+
+    Params:
+        - data_dir (str): The path to the directory containing the images
+        - data_type (str): The type of data we want to compute the number of 
+            step of. Must be one of the three ['training', 'validation',
+            'evaluation'].
+
+    Returns:
+        config_nb_steps (int): The number of steps requested.
+    """
 
     assert data_type in ['training', 'validation', 'evaluation']
 

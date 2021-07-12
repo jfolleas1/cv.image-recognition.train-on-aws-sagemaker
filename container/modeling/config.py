@@ -59,7 +59,15 @@ RANDOM_SEED = 42
 # Instance on which the training is runing
 INSTANCE_TYPE = "ml.g4dn.xlarge"
 
+
+#############################################
+############# DO NOT EDIT BELOW #############
+#############################################
+
 def get_config_dict():
+    """
+    Buidl a dictionnary containing all the config variables and return it.
+    """
     config_dict = {
         "DATA_NAME": DATA_NAME,
         "PROJECT_NAME": PROJECT_NAME,
