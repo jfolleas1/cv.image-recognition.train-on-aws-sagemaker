@@ -1,5 +1,5 @@
 {
-    "TrainingJobName": "training-job-test-flowers-[curr_datetime]",
+    "TrainingJobName": "[algorithm_name]-[curr_datetime]",
     "AlgorithmSpecification": {
         "TrainingImage": "[account].dkr.ecr.[region].amazonaws.com/[algorithm_name]",
         "TrainingInputMode": "File",
@@ -8,11 +8,11 @@
     "RoleArn": "arn:aws:iam::[account]:role/SagemakerRole",
     "InputDataConfig": [
         {
-            "ChannelName": "flowers",
+            "ChannelName": "[data_name]",
             "DataSource": {
                 "S3DataSource": {
                     "S3DataType": "S3Prefix",
-                    "S3Uri": "s3://[project_name].data/flowers",
+                    "S3Uri": "s3://[project_name].data/[data_name]",
                     "S3DataDistributionType": "FullyReplicated"
                 }
             },
@@ -29,5 +29,19 @@
      },
     "StoppingCondition": {
         "MaxRuntimeInSeconds": 86400
-    }
+    },
+    "Tags": [ 
+        { 
+           "Key": "Customer",
+           "Value": "[customer]"
+        },
+        { 
+            "Key": "Project",
+            "Value": "[project_sub_name]"
+        },
+        { 
+            "Key": "Service",
+            "Value": "sagemaker-training"
+        }
+     ]
 }

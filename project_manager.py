@@ -99,6 +99,9 @@ def launch_training():
     algorithm_name = cfg.ALGORITHM_NAME
     project_name = cfg.PROJECT_NAME
     instance_type = cfg.INSTANCE_TYPE
+    data_name = cfg.DATA_NAME
+    customer = cfg.CUSTOMER
+    project_sub_name = cfg.PROJECT
     with open('training-job-config-template.json', 'r') as f:
         training_job_config = f.read()
 
@@ -114,6 +117,14 @@ def launch_training():
                                                       project_name)
     training_job_config = training_job_config.replace("[instance_type]",\
                                                       instance_type)
+    training_job_config = training_job_config.replace("[data_name]",\
+                                                      data_name)
+    training_job_config = training_job_config.replace("[customer]",\
+                                                      customer)
+    training_job_config = training_job_config.replace("[project_sub_name]",\
+                                                      project_sub_name)
+
+                                                      
     # Save the built traing job config json file
     with open("training-job-config.json", "w") as f:
         f.write(training_job_config)

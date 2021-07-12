@@ -4,7 +4,9 @@ from tensorflow.keras.applications import InceptionV3
 # Application configs
 
 DATA_NAME = "flowers"
-PROJECT_NAME = "jac.test-sagemaker"
+CUSTOMER = "jac"
+PROJECT = "test-sagemaker"
+PROJECT_NAME = CUSTOMER + "." + PROJECT # Do not modify
 PROJECT_REGION = "eu-west-1"
 ALGORITHM_NAME = "sagemaker-tf-flower-example"
 
@@ -54,7 +56,7 @@ NB_EPOCHS = 2
 
 # Others
 
-# Random seed set up to make repordiusable trainings
+# Random seed set up to make trainings reproductable
 RANDOM_SEED = 42
 # Instance on which the training is runing
 INSTANCE_TYPE = "ml.g4dn.xlarge"

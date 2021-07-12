@@ -113,5 +113,6 @@ Once unzipped il will have the folder architecture is the following:
 
 #### TODO:
 - Check with jordan if the created buckets and ECR are well protected
+- Add tagging
 - Add gradient decay
 - add restart from checkpoint
