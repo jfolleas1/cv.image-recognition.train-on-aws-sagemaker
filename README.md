@@ -1,14 +1,14 @@
 # Image classification SageMaker training
 
-This repository provide a template to use to train efficiently and effortlessly 
+This repository provides a template to use to train efficiently and effortlessly 
 any image classification model. It is built to be quickly adaptable to new 
-dataset, fully configurable and easy to deploy on pre configured GPU instance 
+dataset, fully configurable and easy to deploy on a pre configured GPU instance 
 with SageMaker.
 
 You will simply have to provide a folder containing images seprated in different 
-sub-folders according to their class. Then you will need to configure the 
+sub-folders according to their classes. Then you will need to configure the 
 project. After that, using the project_manager python script, you will be able
-to create 2 s3 buckets for your data and for your training outputs. Then you 
+to create 2 AWS S3 buckets for your data and for your training outputs. Then you 
 will be able to create a docker images which will be stored on ECR and then run 
 on SageMaker as a training job. The resulting model will be stored on S3 with 
 its performance metrics.
@@ -38,7 +38,7 @@ is given for a classification job with flowers images.
 
 ## Split data in three sets
 
-When configuring the applicatoin you should have, among other things, confugred
+When configuring the applicatoin you should have configured, among other things, 
 your local data directory. In order to split it in 3 directories you should use
 the python script data_handler. Proceed the data split :
 
@@ -75,7 +75,7 @@ configuration previously setup you simply have to run the folowing commande:
 
 `python project_manager.py --build_and_push_docker_image`
 
-It will also push your docker image on ECR.
+It will also push your docker image on AWS ECR.
 
 ## Launch the training job
 
@@ -86,6 +86,8 @@ The final step is to launch the training job. To do so simply use the commande:
 This will create the `training-job-config.json` file based on its template 
 `training-job-config-template.json`. Then based on the created config file it
 will launch the built docker image as a training job.
+
+You will be able to follow your training job progress with AWS CloudWatch.
 
 ## Get the results of your training 
 
