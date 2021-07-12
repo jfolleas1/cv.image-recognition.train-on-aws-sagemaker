@@ -103,8 +103,8 @@ Once unzipped il will have the folder architecture is the following:
 - classes_dict.pkl
 - classification_report.pkl
 - confusion_matrix.pkl
+- config_dict.pkl
 - model.h5
-
 
 #### TODO:
 - Check with jordan if the created buckets and ECR are well protected
