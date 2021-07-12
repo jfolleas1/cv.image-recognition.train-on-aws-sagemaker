@@ -97,6 +97,8 @@ Once the training is finished, the best model will be saved on S3 in the bucket
 trainings for the same project with different sets of hyperparamters and model 
 architectures. The results will be contained in a zipped folder `model.tar.gz`.
 Once unzipped il will have the folder architecture is the following:
+
+```
 - checkpoint
     | -assets
     | -keras_metadata.pb
@@ -107,6 +109,7 @@ Once unzipped il will have the folder architecture is the following:
 - confusion_matrix.pkl
 - config_dict.pkl
 - model.h5
+````
 
 #### TODO:
 - Check with jordan if the created buckets and ECR are well protected
