@@ -13,6 +13,7 @@ ALGORITHM_NAME = "sagemaker-tf-flower-example"
 # Local data config
 
 DATA_LOCAL_DIR = "./flowers"
+IM_EXTENTION = 'jpg'
 PERCENTAGE_VAL = 0.1
 PERCENTAGE_EVAL = 0.1
 
@@ -76,6 +77,7 @@ def get_config_dict():
         "PROJECT_REGION": PROJECT_REGION,
         "ALGORITHM_NAME": ALGORITHM_NAME,
         "DATA_LOCAL_DIR": DATA_LOCAL_DIR,
+        "IM_EXTENTION": IM_EXTENTION,
         "PERCENTAGE_VAL": PERCENTAGE_VAL,
         "PERCENTAGE_EVAL": PERCENTAGE_EVAL,
         "MODEL_BASE": MODEL_BASE,

@@ -126,6 +126,8 @@ def launch_training():
                                                       customer)
     training_job_config = training_job_config.replace("[project_sub_name]",\
                                                       project_sub_name)
+    training_job_config = training_job_config.replace("[im_extention]",\
+                                                      cfg.IM_EXTENTION)
 
                                                       
     # Save the built traing job config json file

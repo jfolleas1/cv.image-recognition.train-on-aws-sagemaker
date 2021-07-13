@@ -16,7 +16,7 @@
                     "S3DataDistributionType": "FullyReplicated"
                 }
             },
-            "ContentType": "image/jpg"
+            "ContentType": "image/[im_extention]"
         }
     ],
     "OutputDataConfig": {
