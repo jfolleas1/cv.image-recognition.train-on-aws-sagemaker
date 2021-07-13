@@ -5,7 +5,7 @@
         "TrainingInputMode": "File",
         "EnableSageMakerMetricsTimeSeries": true
     },
-    "RoleArn": "arn:aws:iam::[account]:role/SagemakerRole",
+    "RoleArn": "arn:aws:iam::[account]:role/[project_sub_name]-SagemakerRole",
     "InputDataConfig": [
         {
             "ChannelName": "[data_name]",

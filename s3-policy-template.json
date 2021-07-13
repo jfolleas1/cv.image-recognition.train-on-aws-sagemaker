@@ -7,8 +7,8 @@
             ],
             "Effect": "Allow",
             "Resource": [
-                "arn:aws:s3:::[project_name].data",
-                "arn:aws:s3:::[project_name].output"
+                "arn:aws:s3:::[project_name].smtj.data",
+                "arn:aws:s3:::[project_name].smtj.output"
             ]
         },
         {
@@ -19,8 +19,8 @@
             ],
             "Effect": "Allow",
             "Resource": [
-                "arn:aws:s3:::[project_name].data/*",
-                "arn:aws:s3:::[project_name].output/*"
+                "arn:aws:s3:::[project_name].smtj.data/*",
+                "arn:aws:s3:::[project_name].smtj.output/*"
             ]
         }
     ]
