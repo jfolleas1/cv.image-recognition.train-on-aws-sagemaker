@@ -36,6 +36,7 @@ TRAINING_WIDTH_SHIFT_RANGE = 0.2 # default: 0
 TRAINING_HEIGTH_SHIFT_RANGE = 0.2 # default: 0
 TRAINING_SHEAR_RANGE = 0.15 # default: 0
 TRAINING_HORIZONTAL_FLIP = True # default: False
+TRAINING_VERTIACL_FLIP = True # default: False
 TRAINING_FILL_MODE = "nearest"
 
 ## Callbacks
