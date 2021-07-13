@@ -12,7 +12,7 @@
             "DataSource": {
                 "S3DataSource": {
                     "S3DataType": "S3Prefix",
-                    "S3Uri": "s3://[project_name].data/[data_name]",
+                    "S3Uri": "s3://[project_name].smtj.data/[data_name]",
                     "S3DataDistributionType": "FullyReplicated"
                 }
             },
@@ -20,7 +20,7 @@
         }
     ],
     "OutputDataConfig": {
-        "S3OutputPath": "s3://[project_name].output"
+        "S3OutputPath": "s3://[project_name].smtj.output"
     },
     "ResourceConfig": {
         "InstanceType": "[instance_type]",
