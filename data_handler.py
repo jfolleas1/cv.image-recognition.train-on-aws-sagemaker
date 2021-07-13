@@ -27,7 +27,9 @@ def split_data_into_class_folders():
             # List all the images in the current class folder 
             class_path = os.path.join(DATA_LOCAL_DIR, class_name)
             print(class_path)
-            imgs_paths = glob.glob(class_path + '/*.jpg')
+            imgs_paths = list(glob.glob(class_path + '/*.jpg'))
+            imgs_paths += list(glob.glob(class_path + '/*.jpeg'))
+            imgs_paths += list(glob.glob(class_path + '/*.png'))
             nb_images = len(imgs_paths)
             # Compute the index limites for each type of data
             train_lim = int(nb_images * (1 - PERCENTAGE_VAL - PERCENTAGE_EVAL))
