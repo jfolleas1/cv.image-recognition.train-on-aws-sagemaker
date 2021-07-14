@@ -50,6 +50,7 @@ def build_data_pipelines():
     height_shift_range=cfg.TRAINING_HEIGTH_SHIFT_RANGE,
     shear_range=cfg.TRAINING_SHEAR_RANGE,
     horizontal_flip=cfg.TRAINING_HORIZONTAL_FLIP,
+    vertical_flip=cfg.TRAINING_VERTIACL_FLIP,
     fill_mode="nearest"
   )
   # Setup validation data generator

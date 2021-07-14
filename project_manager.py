@@ -84,6 +84,7 @@ def build_and_push_docker_image():
     # Build the training docker image
     algorithm_name = cfg.ALGORITHM_NAME
     os.system(f"docker build  -t {algorithm_name} container")
+    os.system(f"aws ecr delete-repository --repository-name {algorithm_name}")
     os.system(f"aws ecr create-repository --repository-name {algorithm_name}")
     os.system(f"aws ecr batch-delete-image --repository-name {algorithm_name}" +\
             f" --image-ids imageTag=latest")

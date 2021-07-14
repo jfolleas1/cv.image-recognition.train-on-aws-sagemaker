@@ -1,4 +1,4 @@
-local_env_requirements.txtabsl-py==0.13.0
+absl-py==0.13.0
 astunparse==1.6.3
 boto3==1.17.106
 botocore==1.20.106
