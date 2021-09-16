@@ -50,6 +50,7 @@ Once your data is splitted between the three dataset:
 - training
 - validation
 - evaluation
+
 You will then create the S3 buckets to store it, and upload the data on this 
 bucket. You will do so by simply using the `project_manager` python script with 
 the coresponding flag:
